@@ -43,4 +43,9 @@ def recipe(request, pk):
     context = {"recipe": recipe}
     return render(request, "recipe.html", context)
 
+def ingredient(request, pk):
+    """ View an ingredient"""
+    ingredient = Ingredient.objects.get(pk=pk)
+    return render(request, "ingredient.html", {"ingredient": ingredient})
+
 # EOF
