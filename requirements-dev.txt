@@ -2,3 +2,5 @@
 black
 pylint
 flake8
+django-debug-toolbar
+mypy

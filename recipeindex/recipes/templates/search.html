@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+<form action="{% url 'search'%}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+  </form>
+
+{% if form.is_valid %}
+<ul>
+{% for recipe in results %}
+    <li> <a href="{% url 'recipe' recipe.pk %}">{{ recipe }}</a>
+{% endfor %}
+</ul>
+{% endif %}
+</body>
+</html>

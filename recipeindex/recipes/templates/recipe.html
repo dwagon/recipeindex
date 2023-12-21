@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{recipe.name}}</title>
+</head>
+<body>
+<h1>{{recipe.name}}</h1>
+"{{recipe.book}}" by {% for author in recipe.book.authors.all %}{{author}}{% endfor %}
+<ul>
+{% for ingredient in recipe.ingredients.all %}
+    <li> {{ingredient.name}}
+{% endfor %}
+</ul>
+</body>
+</html>
