@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{author.name}}</title>
+</head>
+<body>
+<h1>{{author.name}}</h1>
+
+<ul>
+{% for book in books|dictsort:"title" %}
+    <li> <a href="{% url 'book' book.id %}">{{book.title}}</a>
+{% endfor %}
+</ul>
+</body>
+</html>

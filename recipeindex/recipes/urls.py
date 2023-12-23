@@ -16,5 +16,6 @@ urlpatterns = [
     path("search", views.search, name="search"),
     path("recipe/<int:pk>", views.recipe, name="recipe"),
     path("ingredient/<int:pk>", views.ingredient, name="ingredient"),
-    path("book/<int:pk>", views.book, name="book")
+    path("book/<int:pk>", views.book, name="book"),
+path("author/<int:pk>", views.author, name="author")
 ]

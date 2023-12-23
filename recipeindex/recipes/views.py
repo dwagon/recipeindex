@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import SearchForm
-from .models import Ingredient, Recipe, Book
+from .models import Ingredient, Recipe, Book, Author
 
 def index(request):
     return render(request, "index.html")
@@ -54,4 +54,13 @@ def book(request, pk):
     recipes = Recipe.objects.filter(book=book)
     context = {"book": book, "recipes": recipes}
     return render(request, "book.html", context)
+
+def author(request, pk):
+    """ View an author"""
+    author = Author.objects.get(pk=pk)
+    books = Book.objects.filter(authors=author)
+    print(books)
+    context = {"author": author, "books": books}
+    return render(request, "author.html", context)
+
 # EOF
