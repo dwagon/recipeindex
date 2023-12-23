@@ -5,6 +5,10 @@
     <title>Recipe Index</title>
 </head>
 <body>
+{% load view_breadcrumbs %}
+{% block breadcrumbs %}
+    {% render_breadcrumbs %}
+{% endblock %}
 <div id="content">{% block content %} {% endblock %}</div>
 </body>
 </html>
