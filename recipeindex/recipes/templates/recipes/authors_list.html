@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<ul>{% for author in object_list|dictsort:"name" %}
-    <li> <a href="{% url 'authors_detail' author.id %}">{{author.name}}</a>
+<ul class="list-group">{% for author in object_list|dictsort:"name" %}
+    <li class="list-group-item"> <a href="{% url 'authors_detail' author.id %}">{{author.name}}</a>
 {% endfor %}
 </ul>
 {% endblock %}

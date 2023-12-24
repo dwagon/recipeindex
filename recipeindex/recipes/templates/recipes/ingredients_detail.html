@@ -2,9 +2,9 @@
 {% block content %}
 <h1>{{object.name}}</h1>
 {% if object.pantry %}Pantry Staple{% endif %}
-<ul>
+<ul class="list-group">
 {% for recipe in recipes.all|dictsort:"name" %}
-    <li> <a href="{% url 'recipes_detail' recipe.id %}">{{recipe.name}}</a>
+    <li class="list-group-item"> <a href="{% url 'recipes_detail' recipe.id %}">{{recipe.name}}</a>
 {% endfor %}
 </ul>
 {% endblock %}

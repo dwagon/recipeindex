@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>{{object.name}}</h1>
-<ul>
+<ul class="list-group">
 {% for book in books|dictsort:"title" %}
-    <li> <a href="{% url 'books_detail' book.id %}">{{book.title}}</a>
+    <li class="list-group-item"> <a href="{% url 'books_detail' book.id %}">{{book.title}}</a>
 {% endfor %}
 </ul>
 {% endblock %}
