@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{object.name}}</h1>
+<ul class="list-group">
+{% for ingredient in object_list|dictsort:"name" %}
+    <li class="list-group-item"> {% if ingredient.pantry %}*{% endif %}<a href="{% url 'ingredients_detail' ingredient.id %}">{{ingredient.name}}</a>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{object.title}}</h1>
+<p class="lead">By {% for author in object.authors.all %}<a href="{% url 'authors_detail' author.id %}">{{author}}</a>{% endfor %}</p>
+<ul class="list-group">
+{% for recipe in recipes|dictsort:"name" %}
+    <li class="list-group-item"> <a href="{% url 'recipes_detail' recipe.id %}">{{recipe.name}}</a>
+{% endfor %}
+</ul>
+{% endblock %}

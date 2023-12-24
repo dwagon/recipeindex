@@ -9,7 +9,7 @@
 {% if form.is_valid %}
 <ul>
 {% for recipe in results %}
-    <li> <a href="{% url 'recipe' recipe.pk %}">{{ recipe }}</a>
+    <li> <a href="{% url 'recipes_detail' recipe.pk %}">{{ recipe }}</a>
 {% endfor %}
 </ul>
 {% endif %}
