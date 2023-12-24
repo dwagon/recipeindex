@@ -14,8 +14,12 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("api/", include(router.urls)),
     path("search", views.search, name="search"),
-    path("recipe/<int:pk>", views.recipe, name="recipe"),
-    path("ingredient/<int:pk>", views.ingredient, name="ingredient"),
-    path("book/<int:pk>", views.book, name="book"),
-path("author/<int:pk>", views.author, name="author")
+    path("books/", views.BooksListView.as_view(), name="books_view"),
+    path("books/<int:pk>", views.BooksDetailView.as_view(), name="books_detail"),
+    path("authors/", views.AuthorsListView.as_view(), name="authors_view"),
+    path("authors/<int:pk>", views.AuthorsDetailView.as_view(), name="authors_detail"),
+    path("recipes/", views.RecipesListView.as_view(), name="recipes_view"),
+    path("recipes/<int:pk>", views.RecipesDetailView.as_view(), name="recipes_detail"),
+    path("ingredients/", views.IngredientsListView.as_view(), name="ingredients_view"),
+    path("ingredients/<int:pk>", views.IngredientsDetailView.as_view(), name="ingredients_detail"),
 ]

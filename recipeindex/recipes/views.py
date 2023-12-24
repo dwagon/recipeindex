@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.views.generic import ListView, DetailView
 from .forms import SearchForm
 from .models import Ingredients, Recipes, Books, Authors
 
@@ -33,34 +32,48 @@ def search_results(text: str):
     print(f"search_results {text=}")
     for ingredient in ingredients:
         print(f"search_results {ingredient=}")
-        results = results.intersection(ingredient.recipe_set.all())
+        results = results.intersection(ingredient.recipes_set.all())
         print(f"search_results {results=}")
 
     return results
 
-def recipe(request, pk):
-    recipe = Recipes.objects.get(pk=pk)
-    context = {"recipe": recipe}
-    return render(request, "recipe.html", context)
+class IngredientsListView(ListView):
+    model = Ingredients
 
-def ingredient(request, pk):
-    """ View an ingredient"""
-    ingredient = Ingredients.objects.get(pk=pk)
-    return render(request, "ingredient.html", {"ingredient": ingredient})
+class IngredientsDetailView(DetailView):
+    model = Ingredients
 
-def book(request, pk):
-    """ View a book"""
-    book = Books.objects.get(pk=pk)
-    recipes = Recipes.objects.filter(book=book)
-    context = {"book": book, "recipes": recipes}
-    return render(request, "book.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["recipes"] = Recipes.objects.filter(ingredients=self.object)
+        return context
 
-def author(request, pk):
-    """ View an author"""
-    author = Authors.objects.get(pk=pk)
-    books = Books.objects.filter(authors=author)
-    print(books)
-    context = {"author": author, "books": books}
-    return render(request, "author.html", context)
+class RecipesListView(ListView):
+    model = Recipes
+
+class RecipesDetailView(DetailView):
+    model = Recipes
+
+class BooksListView(ListView):
+    model = Books
+
+class BooksDetailView(DetailView):
+    model = Books
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["recipes"] = Recipes.objects.filter(book=self.object)
+        return context
+
+class AuthorsListView(ListView):
+    model = Authors
+
+class AuthorsDetailView(DetailView):
+    model = Authors
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["books"] = Books.objects.filter(authors=self.object)
+        return context
 
 # EOF
