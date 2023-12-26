@@ -16,35 +16,28 @@ class IndexView(BaseBreadcrumbMixin, TemplateView):
 
 def search(request):
     """Find a recipe with ingredients"""
-    results = {}
+    context = {}
     if request.method == "POST":
         form = SearchForm(request.POST)
         if form.is_valid():
-            results = search_results(form.cleaned_data["text"])
+            context["search_term"] = form.cleaned_data["text"]
+            context["authors"] = Authors.objects.filter(
+                name__contains=form.cleaned_data["text"]
+            )
+            context["books"] = Books.objects.filter(
+                title__contains=form.cleaned_data["text"]
+            )
+            context["recipes"] = Recipes.objects.filter(
+                name__contains=form.cleaned_data["text"]
+            )
+            context["ingredients"] = Ingredients.objects.filter(
+                name__contains=form.cleaned_data["text"]
+            )
     else:
         form = SearchForm()
 
-    context = {"form": form, "results": results}
+    context["form"] = form
     return render(request, "search.html", context)
-
-
-def find_ingredients(name: str):
-    """Find an ingredient by name"""
-    results = Ingredients.objects.filter(name__contains=name)
-    print(f"DBG find_ingredients: {results=}")
-    return results
-
-
-def search_results(text: str):
-    ingredients = find_ingredients(text)
-    results = Recipes.objects.all()
-    print(f"search_results {text=}")
-    for ingredient in ingredients:
-        print(f"search_results {ingredient=}")
-        results = results.intersection(ingredient.recipes_set.all())
-        print(f"search_results {results=}")
-
-    return results
 
 
 class IngredientsListView(ListBreadcrumbMixin, ListView):

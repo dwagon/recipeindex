@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="{% url 'search'%}" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-  </form>
-
-{% if form.is_valid %}
+<h1>Search results for "{{search_term}}"</h1>
 <ul>
-{% for recipe in results %}
-    <li> <a href="{% url 'recipes_detail' recipe.pk %}">{{ recipe }}</a>
-{% endfor %}
+    {% for author in authors %}
+        <li> Author: <a href="{% url 'recipes:authors_detail' author.pk %}">{{ author }}</a>
+    {% endfor %}
+    {% for book in books %}
+        <li> Book: <a href="{% url 'recipes:books_detail' book.pk %}">{{ book }}</a>
+    {% endfor %}
+    {% for recipe in recipes %}
+        <li> Recipe: <a href="{% url 'recipes:recipes_detail' recipe.pk %}">{{ recipe }}</a>
+    {% endfor %}
+    {% for ingredient in ingredients %}
+        <li> Ingredient: <a href="{% url 'recipes:ingredients_detail' ingredient.pk %}">{{ ingredient }}</a>
+    {% endfor %}
+
 </ul>
-{% endif %}
 {% endblock %}
