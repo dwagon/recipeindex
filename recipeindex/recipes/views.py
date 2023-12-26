@@ -1,28 +1,35 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
-from view_breadcrumbs import DetailBreadcrumbMixin, ListBreadcrumbMixin, BaseBreadcrumbMixin
+from view_breadcrumbs import (
+    DetailBreadcrumbMixin,
+    ListBreadcrumbMixin,
+    BaseBreadcrumbMixin,
+)
 from .forms import SearchForm
 from .models import Ingredients, Recipes, Books, Authors
 
-class IndexView(BaseBreadcrumbMixin,TemplateView):
+
+class IndexView(BaseBreadcrumbMixin, TemplateView):
     template_name = "index.html"
     crumbs = []
 
+
 def search(request):
-    """ Find a recipe with ingredients"""
+    """Find a recipe with ingredients"""
     results = {}
     if request.method == "POST":
         form = SearchForm(request.POST)
         if form.is_valid():
-            results = search_results(form.cleaned_data['text'])
+            results = search_results(form.cleaned_data["text"])
     else:
         form = SearchForm()
 
     context = {"form": form, "results": results}
     return render(request, "search.html", context)
 
+
 def find_ingredients(name: str):
-    """ Find an ingredient by name"""
+    """Find an ingredient by name"""
     results = Ingredients.objects.filter(name__contains=name)
     print(f"DBG find_ingredients: {results=}")
     return results
@@ -39,8 +46,10 @@ def search_results(text: str):
 
     return results
 
+
 class IngredientsListView(ListBreadcrumbMixin, ListView):
     model = Ingredients
+
 
 class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
     model = Ingredients
@@ -50,14 +59,18 @@ class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
         context["recipes"] = Recipes.objects.filter(ingredients=self.object)
         return context
 
+
 class RecipesListView(ListBreadcrumbMixin, ListView):
     model = Recipes
+
 
 class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
     model = Recipes
 
-class BooksListView(ListBreadcrumbMixin,ListView):
+
+class BooksListView(ListBreadcrumbMixin, ListView):
     model = Books
+
 
 class BooksDetailView(DetailBreadcrumbMixin, DetailView):
     model = Books
@@ -67,8 +80,10 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
         context["recipes"] = Recipes.objects.filter(book=self.object)
         return context
 
+
 class AuthorsListView(ListBreadcrumbMixin, ListView):
     model = Authors
+
 
 class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
     model = Authors
@@ -77,5 +92,6 @@ class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["books"] = Books.objects.filter(authors=self.object)
         return context
+
 
 # EOF

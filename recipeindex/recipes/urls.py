@@ -14,12 +14,42 @@ urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("api/", include(router.urls)),
     path("search", views.search, name="search"),
-    path("books/", views.BooksListView.as_view(), name=views.BooksListView.list_view_name),
-    path("books/<int:pk>", views.BooksDetailView.as_view(), name=views.BooksDetailView.detail_view_name),
-    path("authors/", views.AuthorsListView.as_view(), name=views.AuthorsListView.list_view_name),
-    path("authors/<int:pk>", views.AuthorsDetailView.as_view(), name=views.AuthorsDetailView.detail_view_name),
-    path("recipes/", views.RecipesListView.as_view(), name=views.RecipesListView.list_view_name),
-    path("recipes/<int:pk>", views.RecipesDetailView.as_view(), name=views.RecipesDetailView.detail_view_name),
-    path("ingredients/", views.IngredientsListView.as_view(), name=views.IngredientsListView.list_view_name),
-    path("ingredients/<int:pk>", views.IngredientsDetailView.as_view(), name=views.IngredientsDetailView.detail_view_name),
+    path(
+        "books/", views.BooksListView.as_view(), name=views.BooksListView.list_view_name
+    ),
+    path(
+        "books/<int:pk>",
+        views.BooksDetailView.as_view(),
+        name=views.BooksDetailView.detail_view_name,
+    ),
+    path(
+        "authors/",
+        views.AuthorsListView.as_view(),
+        name=views.AuthorsListView.list_view_name,
+    ),
+    path(
+        "authors/<int:pk>",
+        views.AuthorsDetailView.as_view(),
+        name=views.AuthorsDetailView.detail_view_name,
+    ),
+    path(
+        "recipes/",
+        views.RecipesListView.as_view(),
+        name=views.RecipesListView.list_view_name,
+    ),
+    path(
+        "recipes/<int:pk>",
+        views.RecipesDetailView.as_view(),
+        name=views.RecipesDetailView.detail_view_name,
+    ),
+    path(
+        "ingredients/",
+        views.IngredientsListView.as_view(),
+        name=views.IngredientsListView.list_view_name,
+    ),
+    path(
+        "ingredients/<int:pk>",
+        views.IngredientsDetailView.as_view(),
+        name=views.IngredientsDetailView.detail_view_name,
+    ),
 ]

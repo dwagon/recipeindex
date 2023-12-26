@@ -10,8 +10,8 @@ class Ingredients(models.Model):
     pantry = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name="Ingredient"
-        verbose_name_plural="Ingredients"
+        verbose_name = "Ingredient"
+        verbose_name_plural = "Ingredients"
         ordering = ["name"]
 
     def __str__(self):
@@ -24,8 +24,8 @@ class Authors(models.Model):
     name = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name="Author"
-        verbose_name_plural="Authors"
+        verbose_name = "Author"
+        verbose_name_plural = "Authors"
         ordering = ["name"]
 
     def __str__(self):
@@ -39,8 +39,8 @@ class Books(models.Model):
     authors = models.ManyToManyField(Authors)
 
     class Meta:
-        verbose_name="Book"
-        verbose_name_plural="Books"
+        verbose_name = "Book"
+        verbose_name_plural = "Books"
         ordering = ["title"]
 
     def __str__(self):
@@ -55,8 +55,8 @@ class Recipes(models.Model):
     book = models.ForeignKey(Books, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name="Recipe"
-        verbose_name_plural="Recipes"
+        verbose_name = "Recipe"
+        verbose_name_plural = "Recipes"
         ordering = ["name"]
 
     def __str__(self):
