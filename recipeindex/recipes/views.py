@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
+from view_breadcrumbs import DetailBreadcrumbMixin, ListBreadcrumbMixin, BaseBreadcrumbMixin
 from .forms import SearchForm
 from .models import Ingredients, Recipes, Books, Authors
 
-def index(request):
-    return render(request, "index.html")
+class IndexView(BaseBreadcrumbMixin,TemplateView):
+    template_name = "index.html"
+    crumbs = []
 
 def search(request):
     """ Find a recipe with ingredients"""
@@ -37,10 +39,10 @@ def search_results(text: str):
 
     return results
 
-class IngredientsListView(ListView):
+class IngredientsListView(ListBreadcrumbMixin, ListView):
     model = Ingredients
 
-class IngredientsDetailView(DetailView):
+class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
     model = Ingredients
 
     def get_context_data(self, **kwargs):
@@ -48,16 +50,16 @@ class IngredientsDetailView(DetailView):
         context["recipes"] = Recipes.objects.filter(ingredients=self.object)
         return context
 
-class RecipesListView(ListView):
+class RecipesListView(ListBreadcrumbMixin, ListView):
     model = Recipes
 
-class RecipesDetailView(DetailView):
+class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
     model = Recipes
 
-class BooksListView(ListView):
+class BooksListView(ListBreadcrumbMixin,ListView):
     model = Books
 
-class BooksDetailView(DetailView):
+class BooksDetailView(DetailBreadcrumbMixin, DetailView):
     model = Books
 
     def get_context_data(self, **kwargs):
@@ -65,10 +67,10 @@ class BooksDetailView(DetailView):
         context["recipes"] = Recipes.objects.filter(book=self.object)
         return context
 
-class AuthorsListView(ListView):
+class AuthorsListView(ListBreadcrumbMixin, ListView):
     model = Authors
 
-class AuthorsDetailView(DetailView):
+class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
     model = Authors
 
     def get_context_data(self, **kwargs):

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>{{object.name}}</h1>
-<p class="lead">From <a href="{% url 'books_detail' object.book.id %}">"{{object.book}}"</a> by
-{% for author in object.book.authors.all %}<a href="{% url 'authors_detail' author.id %}">{{author}}</a>{% endfor %}</p>
+<p class="lead">From <a href="{% url 'recipes:books_detail' object.book.id %}">"{{object.book}}"</a> by
+{% for author in object.book.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>{% endfor %}</p>
 <ul class="list-group">
 {% for ingredient in object.ingredients.all|dictsort:"name" %}
-    <li class="list-group-item"> <a href="{% url 'ingredients_detail' ingredient.id %}">{{ingredient.name}}</a>
+    <li class="list-group-item"> <a href="{% url 'recipes:ingredients_detail' ingredient.id %}">{{ingredient.name}}</a>
 {% endfor %}
 </ul>
 {% endblock %}

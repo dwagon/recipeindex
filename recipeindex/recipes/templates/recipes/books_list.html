@@ -3,7 +3,7 @@
 
 <ul class="list-group">
     {% for book in object_list %}
-    <li class="list-group-item"><a href="{% url 'book_detail' book.id %}">"{{ book.title }}"</a> by {% for author in book.authors.all %}<a href="{% url 'author-detail' author.id %}">{{author}}</a>{%endfor%}</li>
+    <li class="list-group-item"><a href="{% url 'recipes:books_detail' book.id %}">"{{ book.title }}"</a> by {% for author in book.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>{%endfor%}</li>
     {% endfor %}
 </ul>
 {% endblock %}
