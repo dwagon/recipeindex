@@ -28,6 +28,7 @@ jobs:
     - name: Run Tests
       run: |
         which python
+        find . -name manage.py -print
         ls -l manage.py
         head manage.py
         python manage.py test
