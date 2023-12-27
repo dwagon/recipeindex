@@ -6,7 +6,7 @@ from django.db import models
 class Ingredients(models.Model):
     """Ingredients"""
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     pantry = models.BooleanField(default=False)
 
     class Meta:
@@ -21,7 +21,7 @@ class Ingredients(models.Model):
 class Authors(models.Model):
     """Authors"""
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
 
     class Meta:
         verbose_name = "Author"
@@ -35,8 +35,8 @@ class Authors(models.Model):
 class Books(models.Model):
     """Books"""
 
-    title = models.CharField(max_length=200)
-    authors = models.ManyToManyField(Authors)
+    title = models.CharField(max_length=200, unique=True)
+    authors = models.ManyToManyField(Authors, blank=True)
 
     class Meta:
         verbose_name = "Book"
