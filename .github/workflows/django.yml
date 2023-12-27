@@ -27,8 +27,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        which python
-        find . -name manage.py -print
-        ls -l manage.py
-        head manage.py
-        python manage.py test
+        python recipeindex/manage.py test
