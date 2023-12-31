@@ -1,4 +1,18 @@
 {% extends "base.html" %}
+{% block dbg_right_heading %}
+      <form class="d-flex" role="search" method="POST" action="{% url 'recipes:authors_create' %}">
+        {% csrf_token %}
+        <input name="text" class="form-control me-2" type="name" placeholder="Author">
+        <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Author</button>
+      </form>
+{% endblock %}
+{% block right_heading %}
+      <form class="d-flex" role="search" method="POST" action="{% url 'recipes:authors_create' %}">
+        {% csrf_token %}
+          {{ form.as_div }}
+        <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Author</button>
+      </form>
+{% endblock %}
 {% block content %}
 <ul class="list-group">{% for author in object_list|dictsort:"name" %}
     <li class="list-group-item"> <a href="{% url 'recipes:authors_detail' author.id %}">{{author.name}}</a>
