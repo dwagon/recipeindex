@@ -1,15 +1,8 @@
 {% extends "base.html" %}
-{% block dbg_right_heading %}
-      <form class="d-flex" role="search" method="POST" action="{% url 'recipes:authors_create' %}">
-        {% csrf_token %}
-        <input name="text" class="form-control me-2" type="name" placeholder="Author">
-        <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Author</button>
-      </form>
-{% endblock %}
 {% block right_heading %}
       <form class="d-flex" role="search" method="POST" action="{% url 'recipes:authors_create' %}">
         {% csrf_token %}
-          {{ form.as_div }}
+        <input name="name" class="form-control me-2" type="text" id="id_name" required placeholder="Author">
         <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Author</button>
       </form>
 {% endblock %}
