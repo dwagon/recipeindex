@@ -32,6 +32,7 @@ urlpatterns = [
         views.AuthorsDetailView.as_view(),
         name=views.AuthorsDetailView.detail_view_name,
     ),
+    path("authors/create", views.AuthorCreateView.as_view(), name="authors_create"),
     path(
         "recipes/",
         views.RecipesListView.as_view(),

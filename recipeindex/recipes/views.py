@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from view_breadcrumbs import (
     DetailBreadcrumbMixin,
     ListBreadcrumbMixin,
     BaseBreadcrumbMixin,
 )
-from .forms import SearchForm
+from .forms import SearchForm, AuthorCreateForm
 from .models import Ingredients, Recipes, Books, Authors
 
 
@@ -77,6 +77,11 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
 class AuthorsListView(ListBreadcrumbMixin, ListView):
     model = Authors
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = AuthorCreateForm()
+        return context
+
 
 class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
     model = Authors
@@ -85,6 +90,11 @@ class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["books"] = Books.objects.filter(authors=self.object)
         return context
+
+
+class AuthorCreateView(CreateView):
+    model = Authors
+    form_class = AuthorCreateForm
 
 
 # EOF
