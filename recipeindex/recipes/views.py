@@ -1,5 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import (
+    ListView,
+    DetailView,
+    TemplateView,
+    CreateView,
+)
 from view_breadcrumbs import (
     DetailBreadcrumbMixin,
     ListBreadcrumbMixin,
@@ -93,8 +99,15 @@ class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
 
 
 class AuthorCreateView(CreateView):
+    template_name = "recipes/authors_list.html"
+    success_url = reverse_lazy("recipes:authors_list")
     model = Authors
-    form_class = AuthorCreateForm
+    fields = ["name"]
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["object_list"] = Authors.objects.all()
+        return data
 
 
 # EOF
