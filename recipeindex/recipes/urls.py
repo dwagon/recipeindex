@@ -32,7 +32,12 @@ urlpatterns = [
         views.AuthorsDetailView.as_view(),
         name=views.AuthorsDetailView.detail_view_name,
     ),
-    path("authors/create", views.AuthorCreateView.as_view(), name="authors_create"),
+    path("authors/create", views.AuthorsCreateView.as_view(), name="authors_create"),
+    path(
+        "authors/<int:pk>/delete",
+        views.AuthorsDeleteView.as_view(),
+        name="authors_delete",
+    ),
     path(
         "recipes/",
         views.RecipesListView.as_view(),

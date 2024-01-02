@@ -5,6 +5,7 @@ from django.views.generic import (
     DetailView,
     TemplateView,
     CreateView,
+    DeleteView,
 )
 from view_breadcrumbs import (
     DetailBreadcrumbMixin,
@@ -98,7 +99,7 @@ class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
         return context
 
 
-class AuthorCreateView(CreateView):
+class AuthorsCreateView(CreateView):
     template_name = "recipes/authors_list.html"
     success_url = reverse_lazy("recipes:authors_list")
     model = Authors
@@ -108,6 +109,11 @@ class AuthorCreateView(CreateView):
         data = super().get_context_data(**kwargs)
         data["object_list"] = Authors.objects.all()
         return data
+
+
+class AuthorsDeleteView(DeleteView):
+    model = Authors
+    success_url = reverse_lazy("recipes:authors_list")
 
 
 # EOF
