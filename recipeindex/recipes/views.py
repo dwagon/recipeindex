@@ -47,6 +47,7 @@ def search(request):
     return render(request, "search.html", context)
 
 
+##################################################################################################################
 class IngredientsListView(ListBreadcrumbMixin, ListView):
     model = Ingredients
 
@@ -72,12 +73,21 @@ class IngredientsCreateView(CreateView):
         return data
 
 
+class IngredientsDeleteView(DeleteView):
+    model = Ingredients
+    success_url = reverse_lazy("recipes:ingredients_list")
+
+
+##################################################################################################################
 class RecipesListView(ListBreadcrumbMixin, ListView):
     model = Recipes
 
 
 class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
     model = Recipes
+
+
+##################################################################################################################
 
 
 class BooksListView(ListBreadcrumbMixin, ListView):
@@ -91,6 +101,9 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["recipes"] = Recipes.objects.filter(book=self.object)
         return context
+
+
+##################################################################################################################
 
 
 class AuthorsListView(ListBreadcrumbMixin, ListView):

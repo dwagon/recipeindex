@@ -1,4 +1,11 @@
 {% extends "base.html" %}
+{% block right_heading %}
+      <form class="d-flex" role="search" method="POST" action="{% url 'recipes:ingredients_delete' object.id %}">
+          {% csrf_token %}
+          {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
+          <button class="btn text-nowrap {% if recipes %}disabled btn-outline-secondary{% else %}btn-outline-danger{% endif %}" type="submit">Delete Ingredient</button>
+      </form>
+{% endblock %}
 {% block content %}
 <h1>{{object.name}}</h1>
 {% if object.pantry %}Pantry Staple{% endif %}
