@@ -60,6 +60,18 @@ class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
         return context
 
 
+class IngredientsCreateView(CreateView):
+    template_name = "recipes/ingredients_list.html"
+    success_url = reverse_lazy("recipes:ingredients_list")
+    model = Ingredients
+    fields = ["name", "pantry"]
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["object_list"] = Ingredients.objects.all()
+        return data
+
+
 class RecipesListView(ListBreadcrumbMixin, ListView):
     model = Recipes
 

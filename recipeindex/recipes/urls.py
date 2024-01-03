@@ -58,4 +58,9 @@ urlpatterns = [
         views.IngredientsDetailView.as_view(),
         name=views.IngredientsDetailView.detail_view_name,
     ),
+    path(
+        "ingredients/create",
+        views.IngredientsCreateView.as_view(),
+        name="ingredients_create",
+    ),
 ]
