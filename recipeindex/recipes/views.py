@@ -12,7 +12,7 @@ from view_breadcrumbs import (
     ListBreadcrumbMixin,
     BaseBreadcrumbMixin,
 )
-from .forms import SearchForm, AuthorCreateForm, BooksCreateForm
+from .forms import SearchForm, AuthorCreateForm, BooksCreateForm, RecipesCreateForm
 from .models import Ingredients, Recipes, Books, Authors
 
 
@@ -85,6 +85,14 @@ class RecipesListView(ListBreadcrumbMixin, ListView):
 
 class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
     model = Recipes
+
+
+class RecipesCreateView(CreateView):
+    template_name = "recipes/recipes_create.html"
+    success_url = reverse_lazy("recipes:recipes_list")
+    form = RecipesCreateForm
+    model = Recipes
+    fields = ["name", "ingredients", "book"]
 
 
 ##################################################################################################################

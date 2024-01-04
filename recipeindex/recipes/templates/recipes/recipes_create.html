@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block right_heading %}
+{% endblock %}
+{% block content %}
+<h1>Create Recipe</h1>
+<form class="d-flex" role="search" method="POST" action="{% url 'recipes:recipes_create' %}">
+    {% csrf_token %}
+    {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
+    {{form.as_p}}
+    <button class="btn text-nowrap btn-outline-secondary" type="submit">Create Recipe</button>
+</form>
+{% endblock %}
