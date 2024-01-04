@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block right_heading %}
-      <form class="d-flex" role="search" method="POST" action="{% url 'recipes:ingredients_create' %}">
-          {% csrf_token %}
-          {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
-          <div class="form-check">
-              <label class="form-check-label me-2" for="id_pantry">Pantry</label>
-              <input name="pantry" class="form-check-input me-2" value="" type="checkbox" id="id_pantry">
-          </div>
-          <input name="name" class="form-control me-2" type="text" id="id_name" required placeholder="Ingredient">
-          <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Ingredient</button>
-      </form>
+<form class="d-flex" role="search" method="POST" action="{% url 'recipes:ingredients_create' %}">
+      {% csrf_token %}
+      {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
+      <div class="form-check">
+          <label class="form-check-label me-2" for="id_pantry">Pantry</label>
+          <input name="pantry" class="form-check-input me-2" value="" type="checkbox" id="id_pantry">
+      </div>
+      <input name="name" class="form-control me-2" type="text" id="id_name" required placeholder="Ingredient">
+      <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Ingredient</button>
+</form>
 {% endblock %}
 {% block content %}
 <h1>{{object.name}}</h1>

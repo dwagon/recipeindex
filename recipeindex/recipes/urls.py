@@ -17,10 +17,16 @@ urlpatterns = [
     path(
         "books/", views.BooksListView.as_view(), name=views.BooksListView.list_view_name
     ),
+    path("books/create", views.BooksCreateView.as_view(), name="books_create"),
     path(
         "books/<int:pk>",
         views.BooksDetailView.as_view(),
         name=views.BooksDetailView.detail_view_name,
+    ),
+    path(
+        "books/<int:pk>/delete",
+        views.BooksDeleteView.as_view(),
+        name="books_delete",
     ),
     path(
         "authors/",

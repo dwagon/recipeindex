@@ -1,12 +1,14 @@
 {% extends "base.html" %}
+{% block right_heading %}
+    <a href="{% url 'recipes:books_create' %}" class="btn btn-outline-secondary text-nowrap">Add Book</a>
+{% endblock %}
 {% block content %}
-
 <ul class="list-group">
     {% for book in object_list %}
     <li class="list-group-item"><a href="{% url 'recipes:books_detail' book.id %}">"{{ book.title }}"</a>
         {% if book.authors.all %}
             by
-            {% for author in book.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>
+            {% for author in book.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>{% if not forloop.last %}, {% endif %}
             {%endfor%}
         {%endif %}
     </li>
