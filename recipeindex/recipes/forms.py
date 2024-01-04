@@ -1,5 +1,5 @@
 from django import forms
-from .models import Authors, Books
+from .models import Authors, Books, Ingredients, Recipes
 
 
 class SearchForm(forms.Form):
@@ -19,6 +19,16 @@ class BooksCreateForm(forms.ModelForm):
 
     authors = forms.ModelMultipleChoiceField(
         queryset=Authors.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
+
+
+class RecipesCreateForm(forms.ModelForm):
+    class Meta:
+        model = Recipes
+        fields = ["name", "ingredients", "book"]
+
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredients.objects.all(), widget=forms.CheckboxSelectMultiple
     )
 
 

@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block right_heading %}
+    <a href="{% url 'recipes:recipes_create' %}" class="btn btn-outline-secondary text-nowrap">Add Recipe</a>
+{% endblock %}
 {% block content %}
 <h1>{{object.name}}</h1>
 <ul class="list-group">
