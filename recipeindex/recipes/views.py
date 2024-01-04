@@ -12,7 +12,7 @@ from view_breadcrumbs import (
     ListBreadcrumbMixin,
     BaseBreadcrumbMixin,
 )
-from .forms import SearchForm, AuthorCreateForm
+from .forms import SearchForm, AuthorCreateForm, BooksCreateForm
 from .models import Ingredients, Recipes, Books, Authors
 
 
@@ -88,10 +88,13 @@ class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
 
 
 ##################################################################################################################
-
-
 class BooksListView(ListBreadcrumbMixin, ListView):
     model = Books
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["authors"] = Authors.objects.all()
+        return context
 
 
 class BooksDetailView(DetailBreadcrumbMixin, DetailView):
@@ -103,9 +106,20 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
         return context
 
 
+class BooksCreateView(CreateView):
+    template_name = "recipes/books_create.html"
+    success_url = reverse_lazy("recipes:books_list")
+    form = BooksCreateForm
+    model = Books
+    fields = ["title", "authors"]
+
+
+class BooksDeleteView(DeleteView):
+    model = Books
+    success_url = reverse_lazy("recipes:books_list")
+
+
 ##################################################################################################################
-
-
 class AuthorsListView(ListBreadcrumbMixin, ListView):
     model = Authors
 
