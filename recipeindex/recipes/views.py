@@ -6,6 +6,7 @@ from django.views.generic import (
     TemplateView,
     CreateView,
     DeleteView,
+    FormView,
 )
 from view_breadcrumbs import (
     DetailBreadcrumbMixin,
@@ -90,9 +91,8 @@ class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
 class RecipesCreateView(CreateView):
     template_name = "recipes/recipes_create.html"
     success_url = reverse_lazy("recipes:recipes_list")
-    form = RecipesCreateForm
+    form_class = RecipesCreateForm
     model = Recipes
-    fields = ["name", "ingredients", "book"]
 
 
 ##################################################################################################################

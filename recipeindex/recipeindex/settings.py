@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "view_breadcrumbs",
     "debug_toolbar",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -77,6 +79,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "recipeindex.wsgi.application"
 
 BREADCRUMBS_HOME_LABEL = "Home"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Database
