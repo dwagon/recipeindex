@@ -2,11 +2,12 @@
 {% block right_heading %}
 {% endblock %}
 {% block content %}
+{% load crispy_forms_tags %}
 <h1>Create Book</h1>
 <form class="d-flex" role="search" method="POST" action="{% url 'recipes:books_create' %}">
     {% csrf_token %}
     {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
-    {{form}}
+    {{form|crispy}}
     <button class="btn text-nowrap btn-outline-secondary" type="submit">Create Book</button>
 </form>
 {% endblock %}
