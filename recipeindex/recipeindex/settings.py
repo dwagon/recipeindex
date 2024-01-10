@@ -34,6 +34,8 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     "recipes.apps.RecipesConfig",
+    "dal",
+    "dal_select2",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
