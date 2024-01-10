@@ -1,3 +1,4 @@
+import string
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -82,6 +83,14 @@ class IngredientsDeleteView(DeleteView):
 ##################################################################################################################
 class RecipesListView(ListBreadcrumbMixin, ListView):
     model = Recipes
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["recipe"] = {}
+        for letter in string.ascii_uppercase:
+            if recipes := Recipes.objects.filter(name__startswith=letter):
+                data["recipe"][letter] = list(recipes)
+        return data
 
 
 class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
