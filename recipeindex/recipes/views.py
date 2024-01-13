@@ -9,6 +9,7 @@ from django.views.generic import (
     DeleteView,
     FormView,
 )
+from dal import autocomplete
 from view_breadcrumbs import (
     DetailBreadcrumbMixin,
     ListBreadcrumbMixin,
@@ -78,6 +79,15 @@ class IngredientsCreateView(CreateView):
 class IngredientsDeleteView(DeleteView):
     model = Ingredients
     success_url = reverse_lazy("recipes:ingredients_list")
+
+
+class IngredientAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Ingredients.objects.all()
+        if self.q:
+            qs = qs.filter(name__icontains=self.q)
+
+        return qs
 
 
 ##################################################################################################################

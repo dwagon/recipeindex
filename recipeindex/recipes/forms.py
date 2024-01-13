@@ -44,31 +44,10 @@ class RecipesCreateForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "book": forms.RadioSelect,
-            "ingredients": forms.CheckboxSelectMultiple,
+            "ingredients": autocomplete.ModelSelect2Multiple(
+                url="recipes:ingredient-autocomplete"
+            ),
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_action = reverse_lazy("recipes:recipes_create")
-        self.helper.layout = Layout(
-            Row(Column(FloatingField("name"))),
-            Row(Column(InlineRadios("book"))),
-            Row(
-                Submit(
-                    "submit",
-                    "Create Recipe",
-                    field_classes="btn",
-                    css_class="p-2",
-                ),
-                css_class="form_row",
-            ),
-            Row(
-                MultiWidgetField(
-                    widget=autocomplete.ModelSelect2(url="select_ingredient")
-                )
-            ),
-        )
 
 
 # EOF
