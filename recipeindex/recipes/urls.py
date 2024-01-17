@@ -75,4 +75,9 @@ urlpatterns = [
         views.IngredientsDeleteView.as_view(),
         name="ingredients_delete",
     ),
+    path(
+        r"ingredient-autocomplete/",
+        views.IngredientAutocomplete.as_view(),
+        name="ingredient-autocomplete",
+    ),
 ]

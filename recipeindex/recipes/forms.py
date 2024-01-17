@@ -1,10 +1,11 @@
 from django import forms
 from django.urls import reverse_lazy
-from .models import Authors, Books, Ingredients, Recipes
+from dal import autocomplete
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column, Field
-from crispy_forms.bootstrap import InlineRadios, InlineCheckboxes
+from crispy_forms.layout import Layout, Submit, Row, Column, MultiWidgetField
+from crispy_forms.bootstrap import InlineRadios
 from crispy_bootstrap5.bootstrap5 import FloatingField
+from .models import Authors, Books, Ingredients, Recipes
 
 
 class SearchForm(forms.Form):
@@ -40,30 +41,13 @@ class XRecipesCreateForm(forms.ModelForm):
 class RecipesCreateForm(forms.ModelForm):
     class Meta:
         model = Recipes
-        fields = "__all__"
+        fields = ["name", "book", "ingredients"]
         widgets = {
             "book": forms.RadioSelect,
-            "ingredients": forms.CheckboxSelectMultiple,
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_action = reverse_lazy("recipes:recipes_create")
-        self.helper.layout = Layout(
-            Row(Column(FloatingField("name"))),
-            Row(Column(InlineRadios("book"))),
-            Row(
-                Submit(
-                    "submit",
-                    "Create Recipe",
-                    field_classes="btn",
-                    css_class="p-2",
-                ),
-                css_class="form_row",
+            "ingredients": autocomplete.ModelSelect2Multiple(
+                url="recipes:ingredient-autocomplete"
             ),
-            Row(Column(InlineCheckboxes("ingredients", css_class="p-2"))),
-        )
+        }
 
 
 # EOF
