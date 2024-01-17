@@ -4,7 +4,7 @@
           {% csrf_token %}
           {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
           <input name="name" class="form-control me-2" type="text" id="id_name" required placeholder="Author">
-          <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Author</button>
+          <button class="btn btn-outline-secondary text-nowrap {% if not user.is_authenticated%}disabled{% endif %}" type="submit">Add Author</button>
       </form>
 {% endblock %}
 {% block content %}

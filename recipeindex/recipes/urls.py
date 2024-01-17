@@ -1,4 +1,5 @@
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
+from django.contrib.auth import views as auth_views
 from rest_framework import routers
 
 from . import views, api_views
@@ -79,5 +80,15 @@ urlpatterns = [
         r"ingredient-autocomplete/",
         views.IngredientAutocomplete.as_view(),
         name="ingredient-autocomplete",
+    ),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(next_page=reverse_lazy("recipes:index")),
+        name="login",
+    ),
+    path(
+        "logout/",
+        auth_views.LogoutView.as_view(next_page=reverse_lazy("recipes:index")),
+        name="logout",
     ),
 ]

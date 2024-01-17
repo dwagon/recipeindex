@@ -1,5 +1,6 @@
 import string
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -18,11 +19,13 @@ from .forms import SearchForm, AuthorCreateForm, BooksCreateForm, RecipesCreateF
 from .models import Ingredients, Recipes, Books, Authors
 
 
+##################################################################################################################
 class IndexView(BaseBreadcrumbMixin, TemplateView):
     template_name = "index.html"
     crumbs = []
 
 
+##################################################################################################################
 def search(request):
     """Find a recipe with ingredients"""
     context = {}
@@ -63,11 +66,12 @@ class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
         return context
 
 
-class IngredientsCreateView(CreateView):
+class IngredientsCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/ingredients_list.html"
     success_url = reverse_lazy("recipes:ingredients_list")
     model = Ingredients
     fields = ["name", "pantry"]
+    login_url = reverse_lazy("recipes:login")
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -75,9 +79,10 @@ class IngredientsCreateView(CreateView):
         return data
 
 
-class IngredientsDeleteView(DeleteView):
+class IngredientsDeleteView(LoginRequiredMixin, DeleteView):
     model = Ingredients
     success_url = reverse_lazy("recipes:ingredients_list")
+    login_url = reverse_lazy("recipes:login")
 
 
 class IngredientAutocomplete(autocomplete.Select2QuerySetView):
@@ -106,11 +111,12 @@ class RecipesDetailView(DetailBreadcrumbMixin, DetailView):
     model = Recipes
 
 
-class RecipesCreateView(CreateView):
+class RecipesCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/recipes_create.html"
     success_url = reverse_lazy("recipes:recipes_list")
     form_class = RecipesCreateForm
     model = Recipes
+    login_url = reverse_lazy("recipes:login")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -137,17 +143,19 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
         return context
 
 
-class BooksCreateView(CreateView):
+class BooksCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/books_create.html"
     success_url = reverse_lazy("recipes:books_list")
     form = BooksCreateForm
     model = Books
     fields = ["title", "authors"]
+    login_url = reverse_lazy("recipes:login")
 
 
-class BooksDeleteView(DeleteView):
+class BooksDeleteView(LoginRequiredMixin, DeleteView):
     model = Books
     success_url = reverse_lazy("recipes:books_list")
+    login_url = reverse_lazy("recipes:login")
 
 
 ##################################################################################################################
@@ -169,11 +177,12 @@ class AuthorsDetailView(DetailBreadcrumbMixin, DetailView):
         return context
 
 
-class AuthorsCreateView(CreateView):
+class AuthorsCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/authors_list.html"
     success_url = reverse_lazy("recipes:authors_list")
     model = Authors
     fields = ["name"]
+    login_url = reverse_lazy("recipes:login")
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -181,9 +190,10 @@ class AuthorsCreateView(CreateView):
         return data
 
 
-class AuthorsDeleteView(DeleteView):
+class AuthorsDeleteView(LoginRequiredMixin, DeleteView):
     model = Authors
     success_url = reverse_lazy("recipes:authors_list")
+    login_url = reverse_lazy("recipes:login")
 
 
 # EOF
