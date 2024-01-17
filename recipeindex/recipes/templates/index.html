@@ -1,3 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% if user.is_authenticated %}
+    <form method="POST" action="{% url 'recipes:logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-success" type="submit" >Logout {{user.username}}</button>
+    </form>
+{% else %}
+    <a class="btn btn-danger" role="button" href="{% url 'recipes:login' %}">Login</a>
+{% endif %}
 {% endblock %}

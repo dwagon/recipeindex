@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form class="d-flex p-2" method="post" action="{% url 'recipes:login' %}">
+{% csrf_token %}
+{{ form | crispy}}
+<button class="btn text-nowrap btn-outline-success" type="submit">Login</button>
+</form>
+
+{% endblock %}
