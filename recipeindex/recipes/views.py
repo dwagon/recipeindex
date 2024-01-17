@@ -7,7 +7,6 @@ from django.views.generic import (
     TemplateView,
     CreateView,
     DeleteView,
-    FormView,
 )
 from dal import autocomplete
 from view_breadcrumbs import (
@@ -112,6 +111,11 @@ class RecipesCreateView(CreateView):
     success_url = reverse_lazy("recipes:recipes_list")
     form_class = RecipesCreateForm
     model = Recipes
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["media"] = autocomplete.Select2.media
+        return context
 
 
 ##################################################################################################################

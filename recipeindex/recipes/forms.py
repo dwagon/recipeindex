@@ -41,7 +41,7 @@ class XRecipesCreateForm(forms.ModelForm):
 class RecipesCreateForm(forms.ModelForm):
     class Meta:
         model = Recipes
-        fields = "__all__"
+        fields = ["name", "book", "ingredients"]
         widgets = {
             "book": forms.RadioSelect,
             "ingredients": autocomplete.ModelSelect2Multiple(

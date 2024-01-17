@@ -6,6 +6,7 @@
 <h1>Create Recipe</h1>
 <form>
 {% csrf_token %}
+{{form.media}}
 {{ form|crispy }}
 <button class="btn text-nowrap btn-outline-secondary" type="submit">Create Recipe</button>
 </form>
