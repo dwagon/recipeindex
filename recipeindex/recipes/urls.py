@@ -78,7 +78,7 @@ urlpatterns = [
     ),
     path(
         r"ingredient-autocomplete/",
-        views.IngredientAutocomplete.as_view(),
+        views.IngredientAutocomplete.as_view(create_field="name"),
         name="ingredient-autocomplete",
     ),
     path(
