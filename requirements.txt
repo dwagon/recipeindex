@@ -1,6 +1,5 @@
 django >= 5
 django-rest-framework
 django-view-breadcrumbs
-django-crispy-forms
-crispy-bootstrap5
 django-autocomplete-light
+django-widget-tweaks

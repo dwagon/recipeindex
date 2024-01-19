@@ -2,12 +2,12 @@
 {% block right_heading %}
 {% endblock %}
 {% block content %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <h1>Create Recipe</h1>
-<form>
+<form class="d-flex row g-3" method="POST" action="{% url 'recipes:recipes_create' %}">
 {% csrf_token %}
 {{form.media}}
-{{ form|crispy }}
+{{form}}
 <button class="btn text-nowrap btn-outline-secondary" type="submit">Create Recipe</button>
 </form>
 {% endblock %}
