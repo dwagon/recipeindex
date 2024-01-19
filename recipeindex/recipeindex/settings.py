@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "view_breadcrumbs",
     "debug_toolbar",
-    "crispy_forms",
-    "crispy_bootstrap5",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
