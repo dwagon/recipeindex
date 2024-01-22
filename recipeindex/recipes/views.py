@@ -140,6 +140,12 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["recipes"] = Recipes.objects.filter(book=self.object)
+        context["recipe"] = {}
+        for letter in string.ascii_uppercase:
+            if recipes := Recipes.objects.filter(
+                book=self.object, name__startswith=letter
+            ):
+                context["recipe"][letter] = list(recipes)
         return context
 
 

@@ -11,9 +11,15 @@
 {% if object.authors.all %}
 <p class="lead">By {% for author in object.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 {% endif %}
+<h2 class="p-3">{{recipes.count}} Recipes</h2>
+
+{% if recipes.count > 10 %}
+{% include "recipes/accordion_list.html" %}
+{% else %}
 <ul class="list-group">
 {% for recipe in recipes|dictsort:"name" %}
     <li class="list-group-item"> <a href="{% url 'recipes:recipes_detail' recipe.id %}">{{recipe.name}}</a>
 {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}
