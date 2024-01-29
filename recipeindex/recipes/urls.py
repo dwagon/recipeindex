@@ -50,6 +50,11 @@ urlpatterns = [
         views.RecipesListView.as_view(),
         name=views.RecipesListView.list_view_name,
     ),
+    path(
+        "recipes/create/<int:book_id>",
+        views.RecipesCreateBookView.as_view(),
+        name="recipes_create_book",
+    ),
     path("recipes/create", views.RecipesCreateView.as_view(), name="recipes_create"),
     path(
         "recipes/<int:pk>",

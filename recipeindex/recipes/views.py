@@ -15,7 +15,13 @@ from view_breadcrumbs import (
     ListBreadcrumbMixin,
     BaseBreadcrumbMixin,
 )
-from .forms import SearchForm, AuthorCreateForm, BooksCreateForm, RecipesCreateForm
+from .forms import (
+    SearchForm,
+    AuthorCreateForm,
+    BooksCreateForm,
+    RecipesCreateForm,
+    RecipesCreateBookForm,
+)
 from .models import Ingredients, Recipes, Books, Authors
 
 
@@ -128,6 +134,18 @@ class RecipesCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["media"] = autocomplete.Select2.media
         return context
+
+    def get_success_url(self):
+        return reverse_lazy(f"recipes:books_detail", args=[self.object.book.id])
+
+
+class RecipesCreateBookView(RecipesCreateView):
+    """Create a recipe with the book already specified"""
+
+    form_class = RecipesCreateBookForm
+
+    def get_initial(self):
+        return {"book": self.kwargs.get("book_id")}
 
 
 ##################################################################################################################

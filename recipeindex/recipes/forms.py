@@ -37,4 +37,18 @@ class RecipesCreateForm(forms.ModelForm):
         }
 
 
+class RecipesCreateBookForm(forms.ModelForm):
+    class Meta:
+        model = Recipes
+        fields = ["name", "book", "ingredients"]
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "p-2 mb-4 form-control"}),
+            "book": forms.HiddenInput,
+            "ingredients": autocomplete.ModelSelect2Multiple(
+                url="recipes:ingredient-autocomplete",
+                attrs={"class": "p-2 form-control"},
+            ),
+        }
+
+
 # EOF
