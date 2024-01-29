@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block right_heading %}
+{% if user.is_authenticated %}
+{% if recipes %}
+    <a href="{% url 'recipes:recipes_create_book' book_id=object.id %}" class="btn btn-outline-secondary text-nowrap">Add Recipe</a>
+{% else %}
   <form class="d-flex" role="search" method="POST" action="{% url 'recipes:books_delete' object.id %}">
       {% csrf_token %}
       {% if form.errors %}<div class="p-2 alert alert-danger" role="alert">{{form.errors}}</div>{% endif %}
-      <button class="btn text-nowrap {% if recipes %}disabled btn-outline-secondary{% else %}btn-outline-danger{% endif %}" type="submit">Delete Book</button>
+      <button class="btn text-nowrap btn-outline-danger" type="submit">Delete Book</button>
   </form>
+{% endif %}
+{% endif %}
 {% endblock %}
 {% block content %}
 <h1>{{object.title}}</h1>
