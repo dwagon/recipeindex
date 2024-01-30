@@ -26,4 +26,4 @@ class AuthorSerializer(serializers.HyperlinkedModelSerializer):
 class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredients
-        fields = ["url", "name", "pantry"]
+        fields = ["url", "name"]

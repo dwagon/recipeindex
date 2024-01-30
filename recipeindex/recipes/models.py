@@ -8,7 +8,6 @@ class Ingredients(models.Model):
     """Ingredients"""
 
     name = models.CharField(max_length=200, unique=True)
-    pantry = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Ingredient"

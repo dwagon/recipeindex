@@ -82,7 +82,7 @@ class IngredientsCreateView(LoginRequiredMixin, CreateView):
     template_name = "recipes/ingredients_list.html"
     success_url = reverse_lazy("recipes:ingredients_list")
     model = Ingredients
-    fields = ["name", "pantry"]
+    fields = ["name"]
     login_url = reverse_lazy("recipes:login")
 
     def get_context_data(self, **kwargs):
