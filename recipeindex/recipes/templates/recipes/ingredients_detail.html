@@ -8,7 +8,6 @@
 {% endblock %}
 {% block content %}
 <h1>{{object.name}}</h1>
-{% if object.pantry %}Pantry Staple{% endif %}
 
 {% if recipes.count > 10 %}
 {% include "recipes/accordion_list.html" %}
