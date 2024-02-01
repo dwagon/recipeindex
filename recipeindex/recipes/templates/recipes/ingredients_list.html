@@ -7,17 +7,26 @@
       <button class="btn btn-outline-secondary text-nowrap" type="submit">Add Ingredient</button>
 </form>
 {% endblock %}
-{% block content %}
-<h1>{{object.name}}</h1>
-<div class="container px-4 text-left">
-    <div class="row row-cols-4">
-        {% for ingredient in object_list|dictsort:"name" %}
-            <div class="col shadow-sm mb-2 p-2 col-md-3 bg-body-secondary rounded">
-                <a href="{% url 'recipes:ingredients_detail' ingredient.id %}">{{ingredient.name}}</a>
-                <span class="badge rounded-pill text-bg-light">{{ingredient.recipes_set.count}}</span>
-            </div>
-        {% endfor %}
-    </div>
-</div>
 
+{% block content %}
+<div class="accordion" id="ingredient_accordion">
+    {% for letter, alpha_ingredients in ingredient.items %}
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{letter}}">
+                    {{letter}} - {{alpha_ingredients|length}} Ingredients
+                </button>
+            </h2>
+            <div id="collapse_{{letter}}" class="accordion-collapse collapse" data-bs-parent="#ingredient_accordion">
+                <div class="accordion-body">
+                    <div class="list-group">
+                        {% for ingredient in alpha_ingredients %}
+                            <a class="list-group-item list-group-item-action" href="{% url 'recipes:ingredients_detail' ingredient.id %}">{{ingredient.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
