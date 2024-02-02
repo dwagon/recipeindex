@@ -62,6 +62,15 @@ def search(request):
 class IngredientsListView(ListBreadcrumbMixin, ListView):
     model = Ingredients
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["ingredients"] = Ingredients.objects.all()
+        context["ingredient"] = {}
+        for letter in string.ascii_uppercase:
+            if ingredients := Ingredients.objects.filter(name__startswith=letter):
+                context["ingredient"][letter] = list(ingredients)
+        return context
+
 
 class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
     model = Ingredients
