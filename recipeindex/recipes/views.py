@@ -1,4 +1,3 @@
-import string
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -63,13 +62,17 @@ class IngredientsListView(ListBreadcrumbMixin, ListView):
     model = Ingredients
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["ingredients"] = Ingredients.objects.all()
-        context["ingredient"] = {}
-        for letter in string.ascii_uppercase:
-            if ingredients := Ingredients.objects.filter(name__startswith=letter):
-                context["ingredient"][letter] = list(ingredients)
-        return context
+        data = super().get_context_data(**kwargs)
+        data["ingredients"] = Ingredients.objects.all()
+        data["ingredient"] = {}
+
+        for ingredient in Ingredients.objects.all():
+            initial_letter = ingredient.name[0]
+            if initial_letter not in data["ingredient"]:
+                data["ingredient"][initial_letter] = []
+            data["ingredient"][initial_letter].append(ingredient)
+
+        return data
 
 
 class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
@@ -79,11 +82,13 @@ class IngredientsDetailView(DetailView, DetailBreadcrumbMixin):
         data = super().get_context_data(**kwargs)
         data["recipes"] = Recipes.objects.filter(ingredients=self.object)
         data["recipe"] = {}
-        for letter in string.ascii_uppercase:
-            if recipes := Recipes.objects.filter(
-                name__startswith=letter, ingredients=self.object
-            ):
-                data["recipe"][letter] = list(recipes)
+
+        for recipe in Recipes.objects.filter(ingredients=self.object):
+            initial_letter = recipe.name[0]
+            if initial_letter not in data["recipe"]:
+                data["recipe"][initial_letter] = []
+            data["recipe"][initial_letter].append(recipe)
+
         return data
 
 
@@ -122,9 +127,11 @@ class RecipesListView(ListBreadcrumbMixin, ListView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data["recipe"] = {}
-        for letter in string.ascii_uppercase:
-            if recipes := Recipes.objects.filter(name__startswith=letter):
-                data["recipe"][letter] = list(recipes)
+        for recipe in Recipes.objects.all():
+            initial_letter = recipe.name[0]
+            if initial_letter not in data["recipe"]:
+                data["recipe"][initial_letter] = []
+            data["recipe"][initial_letter].append(recipe)
         return data
 
 
@@ -145,7 +152,7 @@ class RecipesCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy(f"recipes:books_detail", args=[self.object.book.id])
+        return reverse_lazy("recipes:books_detail", args=[self.object.book.id])
 
 
 class RecipesCreateBookView(RecipesCreateView):
@@ -171,15 +178,17 @@ class BooksDetailView(DetailBreadcrumbMixin, DetailView):
     model = Books
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["recipes"] = Recipes.objects.filter(book=self.object)
-        context["recipe"] = {}
-        for letter in string.ascii_uppercase:
-            if recipes := Recipes.objects.filter(
-                book=self.object, name__startswith=letter
-            ):
-                context["recipe"][letter] = list(recipes)
-        return context
+        data = super().get_context_data(**kwargs)
+        data["recipes"] = Recipes.objects.filter(book=self.object)
+        data["recipe"] = {}
+
+        for recipe in Recipes.objects.filter(book=self.object):
+            initial_letter = recipe.name[0]
+            if initial_letter not in data["recipe"]:
+                data["recipe"][initial_letter] = []
+            data["recipe"][initial_letter].append(recipe)
+
+        return data
 
 
 class BooksCreateView(LoginRequiredMixin, CreateView):
