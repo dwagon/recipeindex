@@ -11,6 +11,7 @@
             {% for author in book.authors.all %}<a href="{% url 'recipes:authors_detail' author.id %}">{{author}}</a>{% if not forloop.last %}, {% endif %}
             {%endfor%}
         {%endif %}
+        <span class="badge rounded-pill text-bg-light">({{book.recipes_set.count}})</span>
     </li>
     {% endfor %}
 </ul>
